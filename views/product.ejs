@@ -1,0 +1,74 @@
+<%- include('partials/header') %>
+
+    <%- include('partials/navbar') %>
+
+        <%- include('partials/banner') %>
+
+            <%- include('partials/collection') %>
+
+                <section id="special" class="py-5">
+                    <div class="container">
+                        <div class="title text-center py-5">
+                            <h2 class="position-relative d-inline-block">Special Selection</h2>
+                        </div>
+                        <!-- <form action="/product/add" method="post"> -->
+                        <div class="special-list row g-0">
+                            <% productList.forEach(function(result) { %>
+                                <div class="col-md-6 col-lg-4 col-xl-3 p-2">
+                                    <div class="special-img position-relative overflow-hidden">
+                                        <img src="<%= result.P_image %> " class="w-100">
+                                        <span
+                                            class="position-absolute d-flex align-items-center justify-content-center text-primary fs-4">
+                                            <i class="fas fa-heart"></i>
+                                        </span>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-capitalize mt-3 mb-1">
+                                            <%= result.P_name %>
+                                        </p>
+                                        <span class="fw-bold d-block">$ <%= result.P_price %></span>
+
+                                        <button <% if(result.in_cart) { %> disabled <% } %> 
+                                            type="button" class="btn btn-raised btn-success pull-right"
+                                            onclick="addToCart(`<%=result.id %>`)" id="addToCartBtn<%=result.id%>">Add to cart
+                                            <!--when button clicked go to add to cart -->
+                                            <!-- <button type="submit"><i class="fa fa-plus mx-3" aria-hidden="true">Add to cart</i></button> -->
+
+                                            <!-- <a href="#"><i class="fa fa-minus mx-3" aria-hidden="true"></i></a> -->
+                                            <!-- <input type="button" value="1" /> -->
+                                            <!-- <a href="#"><i class="fa fa-plus mx-3" aria-hidden="true"></i></a>  -->
+                                        </button>
+                                    </div>
+                                </div>
+                                <% }) %>
+
+                        </div>
+                        <!-- </form> -->
+                    </div>
+                </section>
+                <!-- end of special products -->
+
+                
+                <%- include('partials/blogs') %>`
+
+                    <%- include('partials/about') %>
+
+                        <%- include('partials/popular') %>
+
+                            <%- include('partials/newsletter') %>
+
+                                <%- include('partials/footer') %>
+                                <script>
+                                    function addToCart(id) {
+                                        // alert(id)
+                                        $.ajax({
+                                            type: "POST",
+                                            url: `/cart/add`,
+                                            data: {id: id},
+                                            success: function (response) {
+                                                $(`#addToCartBtn${id}`).prop('disabled',true);
+                                                alert("Item successfully added into cart!")
+                                            }  
+                                        });
+                                    }
+                                </script>
